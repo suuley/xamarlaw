@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lawyer's Posts · Elegant</title>
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #faf8f5;
+      color: #1e1e2a;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HEADER / NAV */
+    .site-header {
+      padding: 28px 0 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1e1e2a;
+    }
+    .logo i {
+      color: #a57c4b;
+      margin-right: 6px;
+    }
+    .logo span {
+      font-weight: 300;
+      color: #6b5b4b;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      font-weight: 500;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2c3a;
+      font-size: 1rem;
+      transition: color 0.2s;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #a57c4b;
+      border-bottom-color: #a57c4b;
+    }
+
+    /* page sections (visible only when active) */
+    .page-section {
+      display: none;
+      animation: fadeUp 0.35s ease;
+    }
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* POSTS GRID – like a blog */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 40px 32px;
+      margin: 20px 0 48px;
+    }
+
+    .post-card {
+      background: #ffffff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 32px -8px rgba(0, 0, 0, 0.08);
+    }
+
+    .post-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      background: #e8e2d9;
+    }
+
+    .post-content {
+      padding: 20px 22px 26px;
+    }
+    .post-content h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+      color: #1e1e2a;
+    }
+    .post-content .post-meta {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #8a7a6a;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+    .post-content p {
+      color: #2e2e3e;
+      font-weight: 400;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+    .post-content .read-more {
+      display: inline-block;
+      margin-top: 14px;
+      color: #a57c4b;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .post-content .read-more i {
+      font-size: 0.75rem;
+      margin-left: 4px;
+    }
+    .post-content .read-more:hover {
+      border-bottom-color: #a57c4b;
+    }
+
+    /* about & contact cards */
+    .info-card {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 44px 48px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(0,0,0,0.02);
+      max-width: 800px;
+      margin: 20px auto 60px;
+    }
+    .info-card h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .info-card h2 i {
+      color: #a57c4b;
+      font-size: 2rem;
+    }
+    .info-card p {
+      font-size: 1.05rem;
+      color: #2e2e3e;
+      margin-bottom: 1.2rem;
+    }
+    .info-card .highlight {
+      color: #a57c4b;
+      font-weight: 500;
+    }
+    .contact-details {
+      margin-top: 24px;
+      background: #f6f3ef;
+      padding: 24px 28px;
+      border-radius: 24px;
+    }
+    .contact-details p {
+      margin-bottom: 8px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-details i {
+      width: 28px;
+      color: #a57c4b;
+      font-size: 1.2rem;
+    }
+
+    /* footer */
+    .site-footer {
+      margin-top: 60px;
+      padding: 28px 0 20px;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      text-align: center;
+      color: #6b5f4f;
+      font-size: 0.9rem;
+    }
+    .site-footer i {
+      color: #a57c4b;
+    }
+
+    /* responsive */
+    @media (max-width: 700px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .nav-links {
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .info-card {
+        padding: 32px 24px;
+      }
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <i class="fas fa-gavel"></i> Lex<span>Post</span>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#" class="active" data-page="home"><i class="fas fa-home" style="margin-right: 6px;"></i>Home</a>
+        <a href="#" data-page="about"><i class="fas fa-scale-balanced" style="margin-right: 6px;"></i>About</a>
+        <a href="#" data-page="contact"><i class="fas fa-envelope" style="margin-right: 6px;"></i>Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HOME PAGE (posts) -->
+    <section id="page-home" class="page-section active">
+      <div style="margin-bottom: 12px;">
+        <p style="color: #6b5f4f; font-weight: 400; letter-spacing: 0.02em; border-left: 4px solid #a57c4b; padding-left: 16px;">
+          <i class="fas fa-feather-pointed" style="color: #a57c4b; margin-right: 8px;"></i>Recent legal insights & updates
+        </p>
+      </div>
+      <div class="posts-grid">
+        <!-- post 1 -->
+        <article class="post-card">
+          <img class="post-img" src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=600&h=400&fit=crop&crop=center&auto=format" alt="Courtroom" loading="lazy">
+          <div class="post-content">
+            <div class="post-meta"><i class="far fa-calendar-alt" style="margin-right: 6px;"></i> June 12, 2026 · 3 min read</div>
+            <h3>New precedent in contract law</h3>
+            <p>The recent ruling redefines force majeure in commercial agreements. Our analysis breaks down the implications for businesses.</p>
+            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+        <!-- post 2 -->
+        <article class="post-card">
+          <img class="post-img" src="https://images.unsplash.com/photo-1589829546156-2458bb8a2d8c?w=600&h=400&fit=crop&crop=center&auto=format" alt="Legal documents" loading="lazy">
+          <div class="post-content">
+            <div class="post-meta"><i class="far fa-calendar-alt" style="margin-right: 6px;"></i> May 28, 2026 · 4 min read</div>
+            <h3>Data privacy & the new EU directive</h3>
+            <p>How the latest GDPR updates affect cross-border data transfers. Key takeaways for your compliance strategy.</p>
+            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+        <!-- post 3 -->
+        <article class="post-card">
+          <img class="post-img" src="https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=600&h=400&fit=crop&crop=center&auto=format" alt="Law books" loading="lazy">
+          <div class="post-content">
+            <div class="post-meta"><i class="far fa-calendar-alt" style="margin-right: 6px;"></i> May 10, 2026 · 5 min read</div>
+            <h3>Intellectual property in the AI era</h3>
+            <p>Exploring ownership and liability when AI-generated content meets traditional IP frameworks. A must-read for innovators.</p>
+            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+        <!-- post 4 -->
+        <article class="post-card">
+          <img class="post-img" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop&crop=center&auto=format" alt="Handshake deal" loading="lazy">
+          <div class="post-content">
+            <div class="post-meta"><i class="far fa-calendar-alt" style="margin-right: 6px;"></i> April 22, 2026 · 2 min read</div>
+            <h3>M&A trends: mid-market surge</h3>
+            <p>Private equity activity in the legal sector is heating up. Our partners share strategic insights for sellers and buyers.</p>
+            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT PAGE -->
+    <section id="page-about" class="page-section">
+      <div class="info-card">
+        <h2><i class="fas fa-scale-balanced"></i> About LexPost</h2>
+        <p><span class="highlight">LexPost</span> is a boutique legal insight platform founded by attorneys who believe in clarity, precision, and accessibility. We translate complex legal developments into actionable knowledge.</p>
+        <p>Our team of seasoned lawyers and legal analysts curate and comment on landmark cases, regulatory shifts, and emerging risks. We serve startups, enterprises, and fellow practitioners.</p>
+        <p style="margin-top: 20px; font-style: italic; border-top: 1px solid #e8e2d9; padding-top: 20px;">
+          <i class="fas fa-quote-left" style="color: #a57c4b; margin-right: 6px;"></i> 
+          Law is not just a profession — it's a framework for trust. We help you navigate it.
+        </p>
+        <div style="display: flex; gap: 28px; margin-top: 28px; flex-wrap: wrap;">
+          <div><i class="fas fa-check-circle" style="color: #a57c4b; margin-right: 8px;"></i> 15+ years combined experience</div>
+          <div><i class="fas fa-check-circle" style="color: #a57c4b; margin-right: 8px;"></i> Published in legal journals</div>
+          <div><i class="fas fa-check-circle" style="color: #a57c4b; margin-right: 8px;"></i> Global network of experts</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT PAGE -->
+    <section id="page-contact" class="page-section">
+      <div class="info-card">
+        <h2><i class="fas fa-envelope"></i> Contact us</h2>
+        <p>Have a question or need legal clarity? Reach out — we’ll respond within 24 hours.</p>
+        <div class="contact-details">
+          <p><i class="fas fa-map-pin"></i> 312 Lex Avenue, Suite 400 · New York, NY 10018</p>
+          <p><i class="fas fa-phone-alt"></i> +1 (212) 555‑0170</p>
+          <p><i class="fas fa-envelope"></i> insights@lexpost.legal</p>
+          <p><i class="fas fa-clock"></i> Mon – Fri, 9:00 AM – 6:00 PM EST</p>
+        </div>
+        <p style="margin-top: 24px; font-size: 0.95rem; color: #4f463a;">
+          <i class="fas fa-shield-halved" style="color: #a57c4b; margin-right: 8px;"></i> 
+          All communications are confidential and attorney‑client privileged where applicable.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><i class="fas fa-gavel" style="margin-right: 6px;"></i> LexPost · legal insights with integrity</p>
+      <p style="margin-top: 6px; font-size: 0.8rem; opacity: 0.7;">&copy; 2026 · crafted for clarity · hosted on GitHub Pages</p>
+    </div>
+  </footer>
+
+  <!-- navigation script: show/hide sections -->
+  <script>
+    (function() {
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const sections = {
+        home: document.getElementById('page-home'),
+        about: document.getElementById('page-about'),
+        contact: document.getElementById('page-contact')
+      };
+
+      function setActivePage(pageId) {
+        // hide all sections
+        Object.values(sections).forEach(s => s.classList.remove('active'));
+        // show selected
+        if (sections[pageId]) sections[pageId].classList.add('active');
+
+        // update nav active class
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.page === pageId) {
+            link.classList.add('active');
+          }
+        });
+
+        // update URL hash (optional)
+        if (pageId === 'home') {
+          history.pushState(null, '', '#');
+        } else {
+          history.pushState(null, '', '#' + pageId);
+        }
+      }
+
+      // click handler
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const page = this.dataset.page;
+          if (page) setActivePage(page);
+        });
+      });
+
+      // read hash on load (if any)
+      const hash = window.location.hash.replace('#', '');
+      if (hash && sections[hash]) {
+        setActivePage(hash);
+      } else {
+        // default: home is already active, but ensure nav matches
+        setActivePage('home');
+      }
+
+      // handle back/forward with hash
+      window.addEventListener('hashchange', function() {
+        const h = window.location.hash.replace('#', '');
+        if (h && sections[h]) {
+          setActivePage(h);
+        } else {
+          setActivePage('home');
+        }
+      });
+
+      // extra: make read-more links just scroll to top (demo)
+      document.querySelectorAll('.read-more').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
