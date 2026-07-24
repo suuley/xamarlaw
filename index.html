@@ -118,6 +118,11 @@
       object-fit: cover;
       display: block;
       background: #e8e2d9;
+      cursor: pointer; /* Indicates the image is clickable */
+      transition: opacity 0.2s;
+    }
+    .post-img:hover {
+      opacity: 0.9;
     }
 
     .post-content {
@@ -160,6 +165,61 @@
     }
     .post-content .read-more:hover {
       border-bottom-color: #a57c4b;
+    }
+
+    /* IMAGE MODAL STYLES */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(30, 30, 42, 0.85);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .image-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-content-wrapper {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .modal-img {
+      display: block;
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+      animation: scaleUp 0.3s ease;
+    }
+    @keyframes scaleUp {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-close {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 5px;
+      transition: color 0.2s;
+    }
+    .modal-close:hover {
+      color: #a57c4b;
     }
 
     /* about & contact cards */
@@ -349,6 +409,14 @@
     </section>
   </main>
 
+  <!-- IMAGE MODAL CONTAINER -->
+  <div class="image-modal" id="imageModal">
+    <div class="modal-content-wrapper">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img class="modal-img" id="modalImg" src="" alt="Expanded View">
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container">
       <p><i class="fas fa-gavel" style="margin-right: 6px;"></i> LexPost · legal insights with integrity</p>
@@ -356,7 +424,7 @@
     </div>
   </footer>
 
-  <!-- navigation script: show/hide sections -->
+  <!-- scripts: navigation and image modal -->
   <script>
     (function() {
       const navLinks = document.querySelectorAll('.nav-links a');
@@ -367,12 +435,9 @@
       };
 
       function setActivePage(pageId) {
-        // hide all sections
         Object.values(sections).forEach(s => s.classList.remove('active'));
-        // show selected
         if (sections[pageId]) sections[pageId].classList.add('active');
 
-        // update nav active class
         navLinks.forEach(link => {
           link.classList.remove('active');
           if (link.dataset.page === pageId) {
@@ -380,7 +445,6 @@
           }
         });
 
-        // update URL hash (optional)
         if (pageId === 'home') {
           history.pushState(null, '', '#');
         } else {
@@ -388,7 +452,6 @@
         }
       }
 
-      // click handler
       navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
@@ -397,16 +460,13 @@
         });
       });
 
-      // read hash on load (if any)
       const hash = window.location.hash.replace('#', '');
       if (hash && sections[hash]) {
         setActivePage(hash);
       } else {
-        // default: home is already active, but ensure nav matches
         setActivePage('home');
       }
 
-      // handle back/forward with hash
       window.addEventListener('hashchange', function() {
         const h = window.location.hash.replace('#', '');
         if (h && sections[h]) {
@@ -416,12 +476,45 @@
         }
       });
 
-      // extra: make read-more links just scroll to top (demo)
       document.querySelectorAll('.read-more').forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+      });
+
+      /* --- IMAGE MODAL LOGIC --- */
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalClose = document.getElementById('modalClose');
+      const postImages = document.querySelectorAll('.post-img');
+
+      postImages.forEach(img => {
+        img.addEventListener('click', function() {
+          modalImg.src = this.src;
+          modal.classList.add('open');
+        });
+      });
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modalImg.src = '';
+      }
+
+      modalClose.addEventListener('click', closeModal);
+
+      // Close when clicking outside the image background overlay
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Close on pressing 'Escape' key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closeModal();
+        }
       });
     })();
   </script>
