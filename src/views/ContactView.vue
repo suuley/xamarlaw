@@ -52,6 +52,14 @@
 
         <div class="contact-rule"></div>
 
+        <span>WhatsApp</span>
+
+        <a href="https://wa.me/252617225603" target="_blank" rel="noopener noreferrer">
+          +252 61 7225603
+        </a>
+
+        <div class="contact-rule"></div>
+
         <span>Office</span>
 
         <p>
