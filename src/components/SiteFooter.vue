@@ -68,10 +68,13 @@ const links = [
           Via Roma<br />
           Mogadishu, Somalia
         </p>
-
+         <a href="https://wa.me/252617225603" target="_blank" rel="noopener noreferrer">
+          +252 61 7225603
+        </a>
         <a href="mailto:abdikarin@xamarlaw.com">
           abdikarin@xamarlaw.com
         </a>
+
       </div>
     </div>
 
